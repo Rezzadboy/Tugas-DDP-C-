@@ -57,7 +57,7 @@ int main (){
 							 "c. Kode 3 = Rp.20000",
 							 "d. Kode 4 = Rp.25000",
 							 "e. Kode 5 = Rp.30000"}; 
-	int ongkir[5]= {10000, 15000, 20000, 25000, 30000}; // ongkir [0]-[4]
+	int ongkir[5]= {10000, 15000, 20000, 25000, 30000}; 
 	int pilih[5]={1,2,3,4,5};
 	cin>>angka;
 	cin.ignore (1,'\n');
