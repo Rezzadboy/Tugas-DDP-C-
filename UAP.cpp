@@ -2,7 +2,7 @@
 // ada beberapa menu pilihan game seperti guntingbatukertas dan juga menebak sebuah angka
 // projek dilakukan secara berkelompok berjumlah 3 orang
 // dengan anggota Reza Nur, Aprillia Anggun, dan juga osmycin Amelia
-// proses ncurses masih dalam pengembangan
+// proses game dengan ncurses masih dalam pengembangan
 
 #include <iostream>
 #include <cstdio>
