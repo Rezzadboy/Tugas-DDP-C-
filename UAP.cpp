@@ -471,74 +471,69 @@ void tebak_angka(){
     menu(); // jika menjawab n makan akan kembali ke menu awal memilih game
 }
 
-// void uji_coba_game(){
+void tebak_angka(){
+    int jawaban, pilih;
+    int kesempatan;
+    char mengulang;
 
-//     initscr();
+    system("cls");
+    garis();
+    gotoxy(21,5);
+    printf("Selamat Datang di Game Tebak Angka"); 
+    gotoxy(21,6);
+    printf("1.Anda diharuskan menebak angka diantara 1-9");
+    gotoxy(21,7);
+    printf("2. jawaban salah akan mengurangi kesempatan anda");
+    Sleep(1000);
 
-//     char gerakan;
-//     x = 2, y = 2;
+    do{
+        system("cls");
+        kesempatan = 2;
+        garis();
+        srand(time(NULL)); 
+        jawaban = rand() % 9 + 1;
 
-//     move(y, x);
-//     mvprintw(y, x, ">"); // mindahin
-//     refresh();
+        gotoxy(21,5);
+        printf("Masukan Tebakan anda: ");
+        gotoxy(43,5);
+        scanf("%d", &pilih);
 
-//     while (true){
-//         gerakan = getch();
+        while (pilih != jawaban && kesempatan > 1){
+            gotoxy(21,5);
+            printf("Tebakan anda salah, tebak lagi");
+            kesempatan-=1;
+            gotoxy(21,6);
+            printf("Sisa Kesempatan Anda: %d ", kesempatan);
+            gotoxy(21,7);
+            printf("tebak lagi: ");
+            gotoxy(33,7);
+            scanf("%d", &pilih); 
+        }
+        system("cls");
+        garis();
 
-//         switch (gerakan){
-//             case 'a':
-//                 if (x == batas_kiri){
+        if (pilih == jawaban && kesempatan > 1){
+            gotoxy(21,5);
+            printf("Tebakan anda benar Selamat Telah memenangkan permainan");
+            gotoxy(21,6);
+            printf("Selamat Telah memenangkan permainan");
+            gotoxy(21,7);
+            printf("ingin bermain lagi?(y/n): ");
+            gotoxy(48,7);
+            scanf("%s", &mengulang);
 
-//                 }else{
-//                     x-=1;
-//                     m = x + 2;// 27+2=29
-//                     n = x + 1;
-//                     mvprintw(y, m,"  "); // 26,y
-//                     mvprintw(y, n,"  ");
-//                 }
-//                 break;
-
-//             case 'd':
-//                 if (x == batas_kanan){
-
-//                 }else{
-//                     x+=1; // 27
-//                     m = x-1;// 27-1=26
-//                     mvprintw(y, m,"  "); // 26,y
-//                     refresh();
-//                 }
-//                 break;
-
-//             case 'w':
-//                 if (y == batas_atas){
-
-//                 }else{
-//                     y-=1; // 2
-//                     m = y + 1; // 2 + 1 = 3
-//                     n = x + 2; 
-//                     mvprintw(m, x, "  ");
-//                     mvprintw(m, n, "  ");
-//                     refresh();
-//                 }
-//                 break;
-
-//             case 's':
-//                 if (y == batas_bawah){
-
-//                 }else{
-//                     y+=1;
-//                     m = y - 1;
-//                     n = x + 1;
-//                     mvprintw(m, n, "  ");
-//                     mvprintw(m, x, "  ");
-//                     refresh();
-//                 }
-//                 break;
-//             }
-            
-//             move(y, x);
-//             mvprintw(y, x, ">");
-//             refresh();
-//     }
-// }
+        }else{
+            gotoxy(21,5);
+            printf("jawaban yang benar adalah: %d ", jawaban);
+            gotoxy(21,6); 
+            printf("Maaf Anda kurang beruntung, silahkan coba lagi");
+            gotoxy(21,7);
+            printf("ingin bermain lagi? (y/n): ");
+            gotoxy(48,7);
+            scanf("%s", &mengulang);
+        }
+    } while (mengulang == 'y');
+    system("cls");
+    games();
+}
 
