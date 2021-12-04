@@ -26,7 +26,7 @@ void garis(); // membuat garis permainan (Ada)
 void gotoxy(); // berisi fungsi go to x dan y (ada)
 void kursor(); // berisi kursor anak panah
 void kursor2(); // berisi kursor anak panah
-void instruksi();
+
 
 int main(){
     garis();
