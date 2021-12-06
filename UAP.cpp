@@ -6,203 +6,146 @@
 
 #include <iostream>
 #include <cstdio>
+#include <ncurses.h>
 #include <windows.h>
 #include <time.h>
 #include <stdlib.h>
-#include <conio.h>
 
-#define batas_bawah 21
-#define batas_kanan 91
-
+#define batas_atas 1
+#define batas_bawah 30
+#define batas_kanan 30
+#define batas_kiri 1
 using namespace std;
 
-void menu(); // Berisi menu awal (Ada)
-void loading(); // berisi tentang animasi loading (Ada)
-void gbk(); // berisi game gunting batu kertas (Ada)
-void tebak_angka(); // berisi game menebak angka
-void kuis(); // berisi game tentang kuis menjawab pertanyaan
-void games(); // berisi pilihan games
-void garis(); // membuat garis permainan (Ada)
-void gotoxy(); // berisi fungsi go to x dan y (ada)
-void kursor(); // berisi kursor anak panah
-void kursor2(); // berisi kursor anak panah
-
+int x, y, m, n;
+// void hapus(); // on going
+// void gerakan();
+void gbk(); // sudah ada
+void tebak_angka(); // sudah ada
+void loading(); // sudah ada
+void uji_coba_game(); // on-going
+void login(); // sudah ada
+void menu(); // sudah ada
 
 int main(){
-    garis();
-    menu();
-    
-}
+    int b;
 
-void gotoxy(int x, int y){
+    printf("Selamat datang Silahkan pilih:\n");
+    printf("Sudah ada Akun?\n");
+    printf("1. 1ogin\n");
+    printf("2. Masuk Sebagai Guest\n");
+    cin>>b;
+    system("cls");
 
-    COORD garis = {x, y};
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), garis);
-}
-
-void garis(){
-
-    for(int i=0; i<=batas_kanan; i++){ // berfungsi membentuk garis atas
-        gotoxy(i, 0);
-        printf("=");
-    }
-
-    for(int j=1; j<=batas_bawah; j++){ // berfungsi untuk membentuk garis kiri
-        gotoxy(0,j);
-        printf("|");
-    }
-
-    for(int l=1; l<=batas_bawah; l++){ // berfungsi untuk membentuk garis kanan
-        gotoxy(batas_kanan, l);
-        printf("|");
-    }
-
-    for (int k=0; k<=batas_kanan; k++){ // berfungsi membentuk garis bawah
-        gotoxy(k , batas_bawah);
-        printf("=");
-    }
+    switch(b){ // jika pemain memilih 1 maka akan berpindah ke menu login 
+        case 1:
+            login();
+            break;
+        
+        case 2: // jika pemain memilih 2 akan berpindah ke menu game sebagai guest
+            loading();
+            printf("Anda Dalam Mode Guest\n");
+            system("pause");
+            system("cls");
+            menu();
+            break;
+        default: // jika tidak ada yang sesuai maka akan kembali mengulang untuk memilih menu
+            loading();
+            printf("Silahkan pilih ulang");
+            system("pause");
+            system("cls");
+            main();
+            break;
+    } 
 }
 
 void loading(){
-    garis();
-    for(int a=0; a<2; a++){ // berfungsi sebagai looping animasi looding screeen
-        garis();
-        gotoxy(21,5); 
+    for(int a=0; a<2; a++){ // berisi loopingan untuk semacam tampilan loading
         printf("Loading.....");
-        Sleep(250);
+        Sleep(500);
         system("cls");
 
-        garis();
-        gotoxy(21,5); 
         printf("Loading...");
-        Sleep(250);
+        Sleep(500);
         system("cls");
 
-        garis();
-        gotoxy(21,5); 
         printf("Loading.");
-        Sleep(250);
+        Sleep(500);
         system("cls");
     }
-    garis();
+}
+
+void login(){
+    string nama;
+    int pw;
+
+    printf("Masukan Username: ");
+    cin>> pw; // login dengan menggunakan npm
+    
+    loading();
+    switch(pw){ // jika sesuai disalah satu case akan berpindah ke menu daftar game
+        case 2117051057:
+            printf("Selamat Datang Reza Nur Ramadhan\n");
+            system("pause");
+            system("cls");
+            menu();
+            break;
+        
+        case 2117051030:
+            printf("Selamat Datang Osmycin Amelia\n");
+            system("pause");
+            system("cls");
+            menu();
+            break;
+
+        case 2117051038:
+            printf("Selamat Datang Aprilia Anggun\n");
+            system("pause");
+            system("cls");
+            menu();
+            break;
+
+        default: // jika username tidak sesuai akan mengulang mebgisi username
+            printf("Login kembali\n");
+            system("pause");
+            system("cls");
+            login();
+            break;
+    }
 }
 
 void menu(){
-    string awal[5]={"Selamat Datang di MiniGame","1.Pilih Game",
-                    "2.Credit","3.Option","4.Exit"}; // berisi beberapa menu tentang credit, pilihan game dan exit
+    string games[3]={"1. Gunting-Batu-Kertas","2. Tebak Angka","3.game(on-going)"};
+    int c, d;
+
+    printf("Selamat datang di Permainan serba ada\n");
+    printf("Silahkan Pilih Game yang dimainkan: \n");
+    for(c=0; c<3; c++){ // me looping array games
+         cout<<games[c]<<"\n";
+    }
+    cin>>d;
+    system("cls");
     
-    for(int i=0; i<5; i++){
-        gotoxy(21, i+5);
-        cout<<awal[i]<<"\n";
+    loading(); // void loading
+    switch (d)
+    {
+    case 1:
+        gbk();
+        break;
+    
+    case 2:
+        tebak_angka();
+        break;
+    
+    case 3: 
+        uji_coba_game();
+        break;
     }
-    kursor();
-}
-
-void kursor(){
-    char arah;
-    int x=18, y=6; // berfungsi untuk menggerakan kursor di void menu
-
-    gotoxy(x,y);
-    cout<<"=>";
-
-    while(true){
-        arah = getch();
-        
-        switch(arah){
-            case 'w':
-                if (y == 6){
-                  
-                }else{
-                    gotoxy(x,y-=1);
-                    printf("=>");
-                    gotoxy(x, y+1);
-                    printf("  ");
-                }
-                gotoxy(x,y);
-                printf("=>");
-                break;
-             
-            case 's': 
-                if (y == 9){
-                    
-                }else{
-                    gotoxy(x, y+=1);
-                    printf("=>");
-                    gotoxy(x, y-1);
-                    printf("  ");    
-                }
-                gotoxy(x,y);
-                printf("=>");
-                break;
-            case 'p':
-                    if (y==6){
-                        games();
-                    }
-                    break;
-        }
-    }
-}
-
-void kursor2(){
-    char arah; // berfungsi menggerakan kursor pada void games
-    int x=18, y=6;
-
-    gotoxy(x,y);
-    cout<<"=>";
-
-    while(true){
-        arah = getch();
-        
-        switch(arah){
-            case 'w':
-                if (y == 6){
-                  
-                }else{
-                    gotoxy(x,y-=1);
-                    printf("=>");
-                    gotoxy(x, y+1);
-                    printf("  ");
-                }
-                gotoxy(x,y);
-                printf("=>");
-                break;
-             
-            case 's': 
-                if (y == 9){
-                    
-                }else{
-                    gotoxy(x, y+=1);
-                    printf("=>");
-                    gotoxy(x, y-1);
-                    printf("  ");    
-                }
-                gotoxy(x,y);
-                printf("=>");
-                break;
-            case 'p':
-                if (y==6){
-                    gbk();
-
-                }else if(y==7){
-                    tebak_angka();
-                }
-                break;
-        }
-    }
-}
-
-void games(){
-    string game[5]={"Silahkan Pilih GAMES yang ini dimainkan",
-                    "1.Gunting-Batu-Kertas","2.Tebak Angka","3.Kuis Tanya Jawab","4.exit"};
-    garis(); 
-    for(int i=0; i<5; i++){ // berisi pilihan game yang akan dimainkan
-        gotoxy(21, i+5);
-        cout<<game[i]<<"\n";
-    }
-    kursor2();
 }
 
 void gbk(){
+
+    // tipe data berisi peraturan dan tata cara permainan
     string cara[5]={"1. Permainan dimainkan 2 pemain",
                     "2. Pemain Memilih antara Gunting(g), kertas(k), batu(b)",
                     "3. Batu < kertas, kertas < gunting, gunting < kertas",
@@ -211,223 +154,153 @@ void gbk(){
     int e, g, uang, uang_musuh, total_uang;
     char milih, jawaban;
 
-    printf("Cara dan Peraturan Permainan: \n"); 
+    printf("Cara dan Peraturan Permainan: \n"); // looping menampilkan peraturan
     for(e=0; e<5; e++){
-        gotoxy(18, e+5);
         cout<<cara[e]<<"\n";
     }
     Sleep(500);
     system("cls");
 
-    do{
-        garis();
-        gotoxy(21,5);
+    do // loopingan untuk menjalankan program gunting batu kertas
+    {   
         printf("Masukan Jumlah uang yang ingin dipetaruhkan: $.");
-        gotoxy(68,5);
-        scanf("%d", &uang);
+        scanf("%d", &uang); // meng input kan jumlah uang
 
         loading();
-        srand(time(NULL));
+        srand(time(NULL)); // me random angka uang musuh
         uang_musuh = rand() % 1000 + 1;
 
-        gotoxy(21,5); 
-        printf("Uang Anda: $.%d",uang);
-        gotoxy(21,6); 
-        printf("uang musuh: $.%d", uang_musuh);
-        total_uang = uang + uang_musuh;
-        gotoxy(21,7); 
-        printf("jumlah total uang yang dipetaruhkan: $.%d", total_uang);
-        gotoxy(21,8); 
-        printf("masukan pilihan anda: g/b/k?: "); 
-        gotoxy(52,8); 
-        cin>>milih;
+        printf("Uang Anda: $.%d\n",uang);
+        printf("uang musuh: $.%d\n", uang_musuh);
+        total_uang = uang + uang_musuh; // jumlaah total uang pemain + uang musuh
+        system("pause");
         system("cls");
 
-        switch (milih){
-            case 'g':
-                srand(time(NULL)); 
-                g = rand() % 3 + 1;
-                if(g==1){ 
-                    garis();
-                    gotoxy(21,5); 
-                    printf("Pilihan anda= Gunting");
-                    gotoxy(21,6); 
-                    printf("Musuh anda = Gunting");
-                    gotoxy(21,7);
-                    system("pause");
+        printf("jumlah total uang yang dipetaruhkan: $.%d\n", total_uang);
+        printf("masukan pilihan anda: g/b/k?"); 
+        cin>>milih; // pemain akan memilih char diantara g = gunting, b= batu, k = kertas
+        system("cls");
+
+        switch(milih){
+            case 'g': // pemain memilih gunting
+                srand(time(NULL)); // merandom angka yang akan digunakan sebagai gunting,batu,kertas
+                g = rand() % 3 + 1; // 1 = gunting, 2 = batu, 3 = kertas
+                if(g==1){ // jika g mengacak dan menghasilkan gunting
+                    printf("Pilihan anda= Gunting\n");
+                    printf("Musuh anda = Gunting\n");
+                    Sleep(500);
                     loading();
-                    
-                    gotoxy(21,5); 
-                    printf("Seimbang");
-                    gotoxy(21,6); 
-                    printf("Ingin Main lagi? (y/n): ");
-                    gotoxy(45,6); 
-                    cin>>jawaban; 
+
+                    printf("Seimbang\n");
+                    printf("Ingin Main lagi? (y/n)\n");
+                    cin>>jawaban; // menjawab y sebagai y, atau n sebagai no
                     system("cls");
 
-                }else if (g==2){ 
-                    garis();
-                    gotoxy(21,5); 
-                    printf("Pilihan anda= Gunting");
-                    gotoxy(21,6); 
-                    printf("Musuh anda = Batu");
-                    gotoxy(21,7);
-                    system("pause");
+                }else if (g==2){ // jika g mengacak dan menghasilkan batu
+                    printf("Pilihan anda= Gunting\n");
+                    printf("Musuh anda = Batu\n");
+                    Sleep(500);
                     loading();
 
-                    gotoxy(21,5); 
-                    printf("Anda Kalah");
-                    gotoxy(21,6); 
-                    printf("Ingin Main lagi? (y/n): ");
-                    gotoxy(45,6); 
+                    printf("Anda Kalah\n");
+                    printf("Ingin Main lagi? (y/n)\n");
                     cin>>jawaban;
                     system("cls");
 
-                }else{ 
-                    garis();
-                    gotoxy(21,5); 
-                    printf("Pilihan anda= Gunting");
-                    gotoxy(21,6);
-                    printf("Musuh anda = Kertas");
-                    gotoxy(21,7);
-                    system("pause");
+                }else{ // jika g mengacak dan menghasilkan kertas
+                    printf("Pilihan anda= Gunting\n");
+                    printf("Musuh anda = Kertas\n");
+                    Sleep(500);
                     loading();
 
-                    gotoxy(21,5); 
-                    printf("Anda Menang");
-                    gotoxy(21,6); 
-                    printf("Anda Mendapatkan Uang sebesar: $.%d ", total_uang);
-                    gotoxy(21,7); 
-                    printf("Ingin Main lagi? (y/n): ");
-                    gotoxy(45,7); 
+                    printf("Anda Menang\n");
+                    printf("Anda Mendapatkan Uang sebesar: $.%d\n", total_uang);
+                    printf("Ingin Main lagi? (y/n)\n");
                     cin>>jawaban;
                     system("cls");
                 }
                 break;
-            case 'b':
-                srand(time(NULL)); 
-                g = rand() % 3 + 1;
-                if(g==1){ 
-                    garis();
-                    gotoxy(21,5); 
-                    printf("Pilihan anda= Batu");
-                    gotoxy(21,6); 
-                    printf("Musuh anda = Gunting");
-                    gotoxy(21,7);
-                    system("pause");
+
+            case 'b': // pemain memilih batu
+                srand(time(NULL));
+                g = rand() % 3 + 1; // 1 = gunting, 2 = batu, 3 = kertas
+                if(g==1){ // jika g mengacak dan menghasilkan gunting
+                    printf("Pilihan anda= Batu\n");
+                    printf("Musuh anda = Gunting\n");
+                    Sleep(500);
                     loading();
 
-                    gotoxy(21,5); 
-                    printf("Anda Menang");
-                    gotoxy(21,6); 
-                    printf("Anda Mendapatkan Uang sebesar: $.%d ", total_uang);
-                    gotoxy(21,7); 
-                    printf("Ingin Main lagi? (y/n): ");
-                    gotoxy(45,7); 
+                    printf("Anda Menang\n");
+                    printf("Anda Mendapatkan Uang sebesar: $.%d\n", total_uang);
+                    printf("Ingin Main lagi? (y/n)\n");
                     cin>>jawaban;
                     system("cls");
-                    
-                }else if (g==2){ 
-                    garis();
-                    gotoxy(21,5); 
-                    printf("Pilihan anda= Batu");
-                    gotoxy(21,6); 
-                    printf("Musuh anda = Batu");
-                    gotoxy(21,7);
-                    system("pause");
+
+                }else if (g==2){ // jika g mengacak dan menghasilkan batu
+                    printf("Pilihan anda= Batu\n");
+                    printf("Musuh anda = Batu\n");
+                    Sleep(500);
                     loading();
 
-                    gotoxy(21,5); 
                     printf("Seimbang");
-                    gotoxy(21,6); 
-                    printf("Ingin Main lagi? (y/n): ");
-                    gotoxy(45,6); 
-                    cin>>jawaban; 
+                    printf("Ingin Main lagi? (y/n)\n");
+                    cin>>jawaban;
                     system("cls");
 
-                }else{ 
-                    garis();
-                    gotoxy(21,5); 
-                    printf("Pilihan anda= Batu");
-                    gotoxy(21,6);
-                    printf("Musuh anda = Kertas");
-                    gotoxy(21,7);
-                    system("pause");
+                }else{ // jika g mengacak dan menghasilkan kertas
+                    printf("Pilihan anda= Batu\n");
+                    printf("Musuh anda = Kertas\n");
+                    Sleep(500);
                     loading();
 
-                    gotoxy(21,5); 
-                    printf("Anda Kalah");
-                    gotoxy(21,6); 
-                    printf("Ingin Main lagi? (y/n): ");
-                    gotoxy(45,6); 
+                    printf("Anda Kalah\n");
+                    printf("Ingin Main lagi? (y/n)\n");
                     cin>>jawaban;
                     system("cls");
                 }
                 break;
-            case 'k':
-                srand(time(NULL)); 
-                g = rand() % 3 + 1;
-                if(g==1){ 
-                    garis();
-                    gotoxy(21,5); 
-                    printf("Pilihan anda= kertas");
-                    gotoxy(21,6); 
-                    printf("Musuh anda = Gunting");
-                    gotoxy(21,7);
-                    system("pause");
+        
+            case 'k': // pemain memilih kertas
+                srand(time(NULL));
+                g = rand() % 3 + 1; // 1 = gunting, 2 = batu, 3 = kertas
+                if(g==1){ // jika g mengacak dan menghasilkan gunting
+                    printf("Pilihan anda= Kertas\n");
+                    printf("Musuh anda = Gunting\n");
+                    Sleep(500);
                     loading();
 
-                    gotoxy(21,5); 
-                    printf("Anda Kalah");
-                    gotoxy(21,6); 
-                    printf("Ingin Main lagi? (y/n): ");
-                    gotoxy(45,6); 
+                    printf("Anda Kalah\n");
+                    printf("Ingin Main lagi? (y/n)\n");
                     cin>>jawaban;
                     system("cls");
-                    
-                }else if (g==2){ 
-                    garis();
-                    gotoxy(21,5); 
-                    printf("Pilihan anda= kertas");
-                    gotoxy(21,6); 
-                    printf("Musuh anda = Batu");
-                    gotoxy(21,7);
-                    system("pause");
+
+                }else if (g==2){ // jika g mengacak dan menghasilkan batu
+                    printf("Pilihan anda= Kertas\n");
+                    printf("Musuh anda = Batu\n");
+                    Sleep(500);
                     loading();
 
-                    gotoxy(21,5); 
-                    printf("Anda Menang");
-                    gotoxy(21,6); 
-                    printf("Anda Mendapatkan Uang sebesar: $.%d ", total_uang);
-                    gotoxy(21,7); 
-                    printf("Ingin Main lagi? (y/n): ");
-                    gotoxy(45,7); 
+                    printf("Anda Menang\n");
+                    printf("Anda Mendapatkan Uang sebesar: $.%d\n", total_uang);
+                    printf("Ingin Main lagi? (y/n)\n");
                     cin>>jawaban;
-                
-                }else{ 
-                    garis();
-                    gotoxy(21,5); 
-                    printf("Pilihan anda= kertas");
-                    gotoxy(21,6);
-                    printf("Musuh anda = Kertas");
-                    gotoxy(21,7);
-                    system("pause");
+                    system("cls");
+                }else{ // jika g mengacak dan menghasilkan kertas
+
+                    printf("Pilihan anda= Kertas\n");
+                    printf("Musuh anda = Kertas\n");
+                    Sleep(500);
                     loading();
 
-                    system("cls");
-                    gotoxy(21,5); 
-                    printf("Seimbang");
-                    gotoxy(21,6); 
-                    printf("Ingin Main lagi? (y/n): ");
-                    gotoxy(45,6); 
-                    cin>>jawaban; 
+                    printf("Seimbang\n");   
+                    printf("Ingin Main lagi? (y/n)\n");
+                    cin>>jawaban;
                     system("cls");
                 }
                 break;
         }
-    } while (jawaban=='y');
-    system("cls");
-    games();
+    } while (jawaban == 'y'); // jika pemain menjawab y makan permainan akan dimulai lagi
+    menu(); // jika pemain menjawab n maka permainan akan diberhentikan dan pemain akan kemabli ke menu awal
 }
 
 void tebak_angka(){
@@ -471,69 +344,76 @@ void tebak_angka(){
     menu(); // jika menjawab n makan akan kembali ke menu awal memilih game
 }
 
-void tebak_angka(){
-    int jawaban, pilih;
-    int kesempatan;
-    char mengulang;
+void uji_coba_game(){
 
-    system("cls");
-    garis();
-    gotoxy(21,5);
-    printf("Selamat Datang di Game Tebak Angka"); 
-    gotoxy(21,6);
-    printf("1.Anda diharuskan menebak angka diantara 1-9");
-    gotoxy(21,7);
-    printf("2. jawaban salah akan mengurangi kesempatan anda");
-    Sleep(1000);
+    initscr();
 
-    do{
-        system("cls");
-        kesempatan = 2;
-        garis();
-        srand(time(NULL)); 
-        jawaban = rand() % 9 + 1;
+    char gerakan;
+    x = 2, y = 2;
 
-        gotoxy(21,5);
-        printf("Masukan Tebakan anda: ");
-        gotoxy(43,5);
-        scanf("%d", &pilih);
+    move(y, x);
+    mvprintw(y, x, ">"); // mindahin
+    refresh();
 
-        while (pilih != jawaban && kesempatan > 1){
-            gotoxy(21,5);
-            printf("Tebakan anda salah, tebak lagi");
-            kesempatan-=1;
-            gotoxy(21,6);
-            printf("Sisa Kesempatan Anda: %d ", kesempatan);
-            gotoxy(21,7);
-            printf("tebak lagi: ");
-            gotoxy(33,7);
-            scanf("%d", &pilih); 
-        }
-        system("cls");
-        garis();
+    while (true){
+        gerakan = getch();
 
-        if (pilih == jawaban && kesempatan > 1){
-            gotoxy(21,5);
-            printf("Tebakan anda benar Selamat Telah memenangkan permainan");
-            gotoxy(21,6);
-            printf("Selamat Telah memenangkan permainan");
-            gotoxy(21,7);
-            printf("ingin bermain lagi?(y/n): ");
-            gotoxy(48,7);
-            scanf("%s", &mengulang);
+        switch (gerakan){
+            case 'a':
+                if (x == batas_kiri){
 
-        }else{
-            gotoxy(21,5);
-            printf("jawaban yang benar adalah: %d ", jawaban);
-            gotoxy(21,6); 
-            printf("Maaf Anda kurang beruntung, silahkan coba lagi");
-            gotoxy(21,7);
-            printf("ingin bermain lagi? (y/n): ");
-            gotoxy(48,7);
-            scanf("%s", &mengulang);
-        }
-    } while (mengulang == 'y');
-    system("cls");
-    games();
+                }else{
+                    x-=1;
+                    m = x + 2;// 27+2=29
+                    n = x + 1;
+                    mvprintw(y, m,"  "); // 26,y
+                    mvprintw(y, n,"  ");
+                }
+                break;
+
+            case 'd':
+                if (x == batas_kanan){
+
+                }else{
+                    x+=1; // 27
+                    m = x-1;// 27-1=26
+                    mvprintw(y, m,"  "); // 26,y
+                    refresh();
+                }
+                break;
+
+            case 'w':
+                if (y == batas_atas){
+
+                }else{
+                    y-=1; // 2
+                    m = y + 1; // 2 + 1 = 3
+                    n = x + 2; 
+                    mvprintw(m, x, "  ");
+                    mvprintw(m, n, "  ");
+                    refresh();
+                }
+                break;
+
+            case 's':
+                if (y == batas_bawah){
+
+                }else{
+                    y+=1;
+                    m = y - 1;
+                    n = x + 1;
+                    mvprintw(m, n, "  ");
+                    mvprintw(m, x, "  ");
+                    refresh();
+                }
+                break;
+            }
+            
+            move(y, x);
+            mvprintw(y, x, ">");
+            refresh();
+    }
 }
+
+
 
